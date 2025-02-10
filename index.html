@@ -1,17 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Layout</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skibidi</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    .heart {
+      position: absolute;
+      width: 100px;
+      height: 90px;
+      background-color: red;
+      transform: rotate(-45deg);
+      animation: move 5s infinite;
+    }
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 90px;
+      background-color: red;
+      border-radius: 50%;
+    }
+    .heart::before {
+      top: -50px;
+      left: 0;
+    }
+    .heart::after {
+      left: 50px;
+      top: 0;
+    }
+    @keyframes move {
+      0% {
+        top: 100vh;
+        left: calc(100vw * var(--i));
+        opacity: 1;
+      }
+      100% {
+        top: -10vh;
+        left: calc(100vw * var(--i) + 50px);
+        opacity: 0;
+      }
+    }
+    .animated-button {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: red;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    #random-number {
+      color: white;
+      font-size: 24px;
+      animation: fadeIn 1s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    .small-heart {
+      width: 20px;
+      height: 18px;
+      background-color: red;
+      transform: rotate(-45deg);
+      margin-left: 10px;
+      position: relative;
+    }
+    .small-heart::before,
+    .small-heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 18px;
+      background-color: red;
+      border-radius: 50%;
+    }
+    .small-heart::before {
+      top: -10px;
+      left: 0;
+    }
+    .small-heart::after {
+      left: 10px;
+      top: 0;
+    }
+    .rectangle {
+      width: 600px;
+      height: 300px;
+      border: 5px solid red;
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-55%, -50%);
+      background-color: rgb(255, 255, 255);
+      background-image: url('https://akns-images.eonline.com/eol_images/Entire_Site/2012925/1024.snoop.mh.102512.jpg?fit=around%7C1024:759&output-quality=90&crop=1024:759;center,top');
+      background-size: cover;
+      background-position: center;
+    }
+    .small-rectangle {
+      width: 200px;
+      height: 50px;
+      border: 5px solid rgb(255, 0, 0);
+      display: inline-block;
+      margin: 30px 0 30px 50px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    .toilet {
+      position: absolute;
+      font-size: 24px;
+      animation: walk 20s linear infinite;
+    }
+    @keyframes walk {
+      0% {
+        top: 0;
+        left: 0;
+      }
+      25% {
+        top: 0;
+        left: calc(100vw - 24px);
+      }
+      50% {
+        top: calc(100vh - 24px);
+        left: calc(100vw - 24px);
+      }
+      75% {
+        top: calc(100vh - 24px);
+        left: 0;
+      }
+      100% {
+        top: 0;
+        left: 0;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="main-rectangle">
-        <div class="heart">&#10084;</div>
-        <div class="small-rectangle left">L</div>
-        <div class="small-rectangle right">V</div>
+  <div class="hearts">
+    <div class="heart" style="--i: 0.1;"></div>
+    <div class="heart" style="--i: 0.3;"></div>
+    <div class="heart" style="--i: 0.5;"></div>
+    <div class="heart" style="--i: 0.7;"></div>
+    <div class="heart" style="--i: 0.9;"></div>
+  </div>
+  <section data-auto-animate>
+    <div data-id="rectangle" style="height: 1000px; background: salmon;"></div>
+  </section>
+  <div class="rectangle">
+    <div id="random-number" style="text-align: center; margin-top: 10px;"></div>
+    <input type="text" class="small-rectangle" style="background: rgb(255, 255, 255);" placeholder="Type name here">
+    <input type="text" class="small-rectangle" style="background: rgb(255, 255, 255);" placeholder="Type name here">
+    <div style="text-align: center; margin-top: 20px;">
+      <button class="animated-button" onclick="generateRandomPercentage()">Generate</button>
     </div>
-    <div class="bottom-rectangle">TEXT</div>
+    <section data-auto-animate>
+    </section>
+    <section data-auto-animate>
+    </section>
+  </div>
+  <script>
+    function generateRandomPercentage() {
+      const randomPercentage = Math.floor(Math.random() * 101) + "%";
+      const randomNumberElement = document.getElementById("random-number");
+      randomNumberElement.innerHTML = randomPercentage + '<div class="small-heart"></div>';
+      randomNumberElement.style.animation = "none";
+      randomNumberElement.offsetHeight; 
+      randomNumberElement.style.animation = "fadeIn 1s ease-in-out";
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      for (let i = 0; i < 200; i++) { // Increased the number of toilets to 200
+        const toilet = document.createElement("div");
+        toilet.classList.add("toilet");
+        toilet.style.animationDelay = `${i * 0.2}s`;
+        toilet.innerHTML = "🚽";
+        document.body.appendChild(toilet);
+      }
+    });
+  </script>
 </body>
 </html>
